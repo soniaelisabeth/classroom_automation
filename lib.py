@@ -4,6 +4,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 class Lib():
+    '''
+    Para não precisar ficarmos repetindo código, criei métodos simples
+    que já fazem o que precisamos.
+    Se quiserem acessar o driver pela test_page para adicionar mais algum método
+    do selenium basta chamar, por exemplo: self.driver.set_focus()
+    '''
     WEBDRIVER_PATH = '.\\tools\\chromedriver.exe'
 
     def start_browser(self):

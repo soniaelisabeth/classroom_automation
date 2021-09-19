@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from lib import Lib
 
 class TestsPage(Lib):
+    'Coloquem os localizadores dos elementos aqui, vai facilitar!'
     __EMAIL_TEXTBOX =  By.ID, 'username'
     __SENHA_TEXTBOX = By.ID, 'password'
     __ACESSAR_BUTTON = By.CLASS_NAME, 'btn-primary'
@@ -14,7 +15,6 @@ class TestsPage(Lib):
         self.fill(self.__EMAIL_TEXTBOX, user)
         self.fill(self.__SENHA_TEXTBOX, password)
         self.click(self.__ACESSAR_BUTTON)
-    
-    
+        assert 'Meus cursos' in self.driver.title
 
     
