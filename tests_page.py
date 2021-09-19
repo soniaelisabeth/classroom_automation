@@ -21,7 +21,8 @@ class TestsPage(Lib):
         self.fill(self.__EMAIL_TEXTBOX, user)
         self.fill(self.__SENHA_TEXTBOX, password)
         self.click(self.__ACESSAR_BUTTON)
-        assert 'Meus cursos' in self.driver.title
+        text = 'Meus cursos'
+        assert text in self.driver.title
     
     def ct_002(self, user):
         #Alteração de usuário ou senha pela identificação do usuário
