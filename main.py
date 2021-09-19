@@ -1,14 +1,15 @@
 from lib import Lib
-from login_page import LoginPage
+from tests_page import TestsPage
 from time import sleep
 
 lib = Lib()
-undb_classroom = 'https://undbclassroom.undb.edu.br'
+website = 'https://undbclassroom.undb.edu.br'
 
 driver = lib.start_browser()
 
-login_page = LoginPage(driver)
-login_page.open_page(undb_classroom)
+undb_classroom = TestsPage(driver)
+undb_classroom.open_page(website)
+undb_classroom.ct_001('seu usuário', 'sua senha')
 
 assert 'UNDB' in driver.title
 

@@ -2,22 +2,18 @@ from selenium.webdriver.common import by
 from selenium.webdriver.common.by import By
 from lib import Lib
 
-class LoginPage(Lib):
+class TestsPage(Lib):
     __EMAIL_TEXTBOX =  By.ID, 'username'
     __SENHA_TEXTBOX = By.ID, 'password'
     __ACESSAR_BUTTON = By.CLASS_NAME, 'btn-primary'
 
     def __init__(self, driver):
         self.driver = driver
-
-    def open_page(self, url):
-        self.driver.get(url)
     
-    def fill_login(self, text):...
-
-    def fill_senha(self, text):...
-
-    def click_acessar(self):...
+    def ct_001(self, user, password):
+        self.fill(self.__EMAIL_TEXTBOX, user)
+        self.fill(self.__SENHA_TEXTBOX, password)
+        self.click(self.__ACESSAR_BUTTON)
     
     
 

@@ -9,12 +9,15 @@ class Lib():
     def start_browser(self):
         self.driver = webdriver.Chrome(self.WEBDRIVER_PATH)
         return self.driver
+    
+    def open_page(self, url):
+        self.driver.maximize_window()
+        self.driver.get(url)
 
     def click(self, locator):
         WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable(locator)).click()
     
     def fill(self, locator, text):
-        elem = EC.element_to_be_clickable(locator)
-        elem = self.webdriver.wait.until(elem)
+        elem = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
         elem.clear()
         elem.send_keys(text)
