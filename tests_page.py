@@ -29,7 +29,8 @@ class TestsPage(Lib):
         self.click(self.__ESQUECEU_SENHA_BUTTON)
         self.fill(self.__ID_USUARIO_TEXTBOX, user)
         self.click(self.__BUSCAR_BUTTON_1)
-        assert '' in self.driver.title
+        text = 'Se o usuário e o email estiverem corretos um email deve ter sido enviado a você.'
+        assert text in self.driver.title
 
     def ct_003(self,):...
     
