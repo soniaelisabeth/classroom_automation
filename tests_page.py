@@ -4,6 +4,7 @@ from lib import Lib
 
 class TestsPage(Lib):
     'Coloquem os localizadores dos elementos aqui, vai facilitar!'
+    URL = 'https://undbclassroom.undb.edu.br'
     __EMAIL_TEXTBOX =  By.ID, 'username'
     __SENHA_TEXTBOX = By.ID, 'password'
     __ACESSAR_BUTTON = By.CLASS_NAME, 'btn-primary'
@@ -12,6 +13,7 @@ class TestsPage(Lib):
         self.driver = driver
     
     def ct_001(self, user, password):
+        self.open_page(self.URL)
         self.fill(self.__EMAIL_TEXTBOX, user)
         self.fill(self.__SENHA_TEXTBOX, password)
         self.click(self.__ACESSAR_BUTTON)
