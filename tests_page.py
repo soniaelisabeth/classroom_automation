@@ -10,7 +10,7 @@ class TestsPage(Lib):
     __ACESSAR_BUTTON = By.CLASS_NAME, 'btn-primary'
     __ESQUECEU_SENHA_BUTTON = By.XPATH, '//a[contains(text(), "Esqueceu o seu usuário ou senha?")]'
     __ID_USUARIO_TEXTBOX = By.ID, 'id_username'
-    __BUSCAR_BUTTON_1 = By.NAME, 'submitbuttonusername'
+    __BUSCAR_BUTTON = By.NAME, 'submitbuttonusername'
 
     def __init__(self, driver):
         self.driver = driver
@@ -28,7 +28,7 @@ class TestsPage(Lib):
         self.open_page(self.URL)
         self.click(self.__ESQUECEU_SENHA_BUTTON)
         self.fill(self.__ID_USUARIO_TEXTBOX, user)
-        self.click(self.__BUSCAR_BUTTON_1)
+        self.click(self.__BUSCAR_BUTTON)
         text = 'Se o usuário e o email estiverem corretos um email deve ter sido enviado a você.'
         assert text in self.driver.title
 
