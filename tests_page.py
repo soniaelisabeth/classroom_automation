@@ -1,3 +1,4 @@
+from _typeshed import Self
 from selenium.webdriver.common import by
 from selenium.webdriver.common.by import By
 from lib import Lib
@@ -27,6 +28,17 @@ class TestsPage(Lib):
     __ACESSSAR_SAIR = By.XPATH, '//*[@id="action-menu-1-menu"]/a[7]'
     __EMAIL_GOOGLE = By.ID, 'identifierId'
     __BOTAO_PROXIMO = By.XPATH, '//*[@id="identifierNext"]/div/button'
+    __DISCIPLINA_TESTAGEM = By.XPATH, '//*[@id="frontpage-course-list"]/div/div[1]/div[2]/div[3]/div/a'
+    __CLICK_SARAIVA = By.XPATH, '//*[@id="module-122235"]/div/div/div[2]/div/a/span'
+    __LOGIN_SARAIVA = By.CLASS_NAME, 'ng-untouched'
+    __CLICK_PEARSON = By.XPATH, '//*[@id="module-122236"]/div/div/div[2]/div/a'
+    __ERROR_PEARSON = By.ID, 'sub-frame-error'
+    __SEND_EMAIL = By.NAME, 'send'
+    __ERROR_DESTINATARIO = By.ID, 'id_error_recipients'
+    __PESQUISA_SATISFACAO = By.XPATH, '//*[@id="module-120665"]/div/div/div[2]/div/a/span'
+    __RESPONDA_PESQUISA = By.XPATH, '//*[@id="region-main"]/div[1]/div/div/div[2]/div/a'
+    __SIM_BUTTTON = By.ID, 'id_multichoice_16594_1'
+    __NAO_BUTTTON = By.ID, 'id_multichoice_16594_2'
 
     def __init__(self, driver):
         self.driver = driver
@@ -58,22 +70,51 @@ class TestsPage(Lib):
         text = 'Se o usuário e o email estiverem corretos um email deve ter sido enviado a você.'
         assert text in self.driver.title
     
-    def ct_0004(self,):...
+    def ct_0004(self):...
     
-    def ct_0005(self,):...
+    def ct_0005(self):
+        #Biblioteca Online Saraiva
+        self.ct_0001('user', 'password')
+        self.click(self.__DISCIPLINA_TESTAGEM)
+        self.click(self.__CLICK_SARAIVA)
+        result = self.driver.find_element(*self.__LOGIN_SARAIVA).is_enabled()
+        assert result is True
     
-    def ct_0006(self,):...
+    def ct_0006(self):
+        #Biblioteca Online Pearson
+        self.ct_0001('user', 'password')
+        self.click(self.__DISCIPLINA_TESTAGEM)
+        self.click(self.__CLICK_PEARSON)
+        result = self.driver.find_element(*self.__ERROR_PEARSON).is_enabled()
+        assert result is False
     
-    def ct_0007(self,):...
+    def ct_0007(self):
+        #Envio de email sem destinatário
+        self.ct_0001('user', 'password')
+        self.click(self.__DISCIPLINA_TESTAGEM)
+        self.click(self.__EMAIL_NAV)
+        self.click(self.__NEW_EMAIL)
+        self.click(self.__SEND_EMAIL)
+        result = self.driver.find_element(*self.__ERROR_DESTINATARIO).is_enabled()
+        assert result is False
     
-    def ct_0008(self,):...
+    def ct_0008(self):
+        #Teste de múltipla escolha. marcando apenas 1 alternativa
+        self.ct_0001('user', 'password')
+        self.click(self.__DISCIPLINA_TESTAGEM)
+        self.click(self.__PESQUISA_SATISFACAO)
+        self.click(self.__RESPONDA_PESQUISA)
+        self.click(self.__SIM_BUTTTON)
+        self.click(self.__NAO_BUTTTON)
+        result = self.driver.find_element(*self.__SIM_BUTTTON).is_selected()
+        assert result is False
     
-    def ct_0009(self,):...
+    def ct_0009(self):...
     
-    def ct_0010(self,):...
+    def ct_0010(self):...
     
-    def ct_0011(self,):...
 
+    def ct_0011(self,):...
     def ct_0012(self,):...
     def ct_0013(self,):...
     def ct_0014(self,):...
