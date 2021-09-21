@@ -41,8 +41,8 @@ class TestsPage(Lib):
     __NOTIFICACOES = By.CLASS_NAME, 'slicon-bell'
     __PREFERENCIAS_NOTIFICACOES = By.CLASS_NAME, 'slicon-settings'
     __NOTIFICAO_WEB = By.CLASS_NAME, 'preference-state-status-container'
-    __AV_QUALIS = By.NAME, '//*[@id="module-120646"]/div/div/div[2]/div/a/span'
-    __ADICIONAR_ENVIO = By.ID, 'single_button614a4b6d8eeb019'
+    __AV_QUALIS = By.XPATH, '//span[contains(text(), "Av Qualis - Produto")]'
+    __ADICIONAR_ENVIO = By.XPATH, '//button[contains(text(), "Adicionar envio")]'
     __SALVAR_ENVIO = By.NAME, 'submitbutton'
     __ALERTA_ENVIO = By.CLASS_NAME, 'alert-danger'
     __PERFIL_USER = By.XPATH, '//*[@id="action-menu-toggle-1"]/span/span[2]/span/img'
@@ -86,7 +86,7 @@ class TestsPage(Lib):
     
     def ct_0004(self):
         #Alteração de Gravatar
-        self.ct_0001('002-020865', 'Isatkm.alex1')
+        self.ct_0001('insira o usuário!', 'insira sua senha!')
         self.click(self.__PERFIL_USER)
         self.click(self.__PREFERENCIAS_USER)
         self.click(self.__MODIFICAR_PERFIL)
@@ -100,7 +100,7 @@ class TestsPage(Lib):
     
     def ct_0005(self):
         #Biblioteca Online Saraiva
-        self.ct_0001('002-020865', 'Isatkm.alex1')
+        self.ct_0001('insira o usuário!', 'insira sua senha!')
         self.click(self.__DISCIPLINA_TESTAGEM)
         self.click(self.__CLICK_SARAIVA)
         text = 'Saraiva Online'
@@ -108,7 +108,7 @@ class TestsPage(Lib):
     
     def ct_0006(self):
         #Biblioteca Online Pearson
-        self.ct_0001('002-020865', 'Isatkm.alex1')
+        self.ct_0001('insira o usuário!', 'insira sua senha!')
         self.click(self.__DISCIPLINA_TESTAGEM)
         self.click(self.__CLICK_PEARSON)
         text = 'Pearson'
@@ -116,7 +116,7 @@ class TestsPage(Lib):
     
     def ct_0007(self):
         #Envio de email sem destinatário
-        self.ct_0001('002-020865', 'Isatkm.alex1')
+        self.ct_0001('insira o usuário!', 'insira sua senha!')
         self.click(self.__DISCIPLINA_TESTAGEM)
         self.click(self.__EMAIL_NAV)
         self.click(self.__NEW_EMAIL)
@@ -126,7 +126,7 @@ class TestsPage(Lib):
     
     def ct_0008(self):
         #Teste de múltipla escolha. marcando apenas 1 alternativa
-        self.ct_0001('002-020865', 'Isatkm.alex1')
+        self.ct_0001('insira o usuário!', 'insira sua senha!')
         self.click(self.__DISCIPLINA_TESTAGEM)
         self.click(self.__PESQUISA_SATISFACAO)
         self.click(self.__RESPONDA_PESQUISA)
@@ -137,7 +137,7 @@ class TestsPage(Lib):
     
     def ct_0009(self):
         #Desativar alguma notificação
-        self.ct_0001('002-020865', 'Isatkm.alex1')
+        self.ct_0001('insira o usuário!', 'insira sua senha!')
         self.click(self.__NOTIFICACOES)
         self.click(self.__PREFERENCIAS_NOTIFICACOES)
         buttons = self.driver.find_elements(*self.__NOTIFICAO_WEB)
@@ -147,13 +147,13 @@ class TestsPage(Lib):
     
     def ct_0010(self):
         #Verificação de sucesso no envio
-        self.ct_0001('002-020865', 'Isatkm.alex1')
+        self.ct_0001('insira o usuário!', 'insira sua senha!')
         self.click(self.__DISCIPLINA_TESTAGEM)
         self.click(self.__AV_QUALIS)
         self.click(self.__ADICIONAR_ENVIO)
         self.click(self.__SALVAR_ENVIO)
         result = self.driver.find_element(*self.__ALERTA_ENVIO).is_enabled()
-        assert result is False
+        assert result is True
     
 
     def ct_0011(self,):...
