@@ -1,6 +1,5 @@
 from lib import Lib
 from tests_page import TestsPage
-from time import sleep
 
 lib = Lib()
 driver = lib.start_browser()
