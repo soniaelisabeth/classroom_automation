@@ -6,8 +6,5 @@ lib = Lib()
 driver = lib.start_browser()
 undb_classroom = TestsPage(driver)
 
-# undb_classroom.ct_001('seu usuário', 'sua senha')
-# undb_classroom.ct_002('usuario')
-# undb_classroom.ct_003('email@institucional.com')
-
+undb_classroom.ct_0010()
 print('')

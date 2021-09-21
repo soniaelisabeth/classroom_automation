@@ -1,5 +1,3 @@
-from _typeshed import Self
-from selenium.webdriver.common import by
 from selenium.webdriver.common.by import By
 from lib import Lib
 from time import sleep
@@ -30,10 +28,10 @@ class TestsPage(Lib):
     __EMAIL_GOOGLE = By.ID, 'identifierId'
     __BOTAO_PROXIMO = By.XPATH, '//*[@id="identifierNext"]/div/button'
     __DISCIPLINA_TESTAGEM = By.XPATH, '//*[@id="frontpage-course-list"]/div/div[1]/div[2]/div[3]/div/a'
-    __CLICK_SARAIVA = By.XPATH, '//*[@id="module-122235"]/div/div/div[2]/div/a/span'
-    __LOGIN_SARAIVA = By.CLASS_NAME, 'ng-untouched'
-    __CLICK_PEARSON = By.XPATH, '//*[@id="module-122236"]/div/div/div[2]/div/a'
-    __ERROR_PEARSON = By.ID, 'sub-frame-error'
+    __CLICK_SARAIVA = By.XPATH, '//*[@id="module-120666"]/div/div/div[2]/div/a'
+    __CLICK_PEARSON = By.XPATH, '//*[@id="module-120667"]/div/div/div[2]/div'
+    __EMAIL_NAV = By.CLASS_NAME, 'fa-envelope'
+    __NEW_EMAIL = By.CLASS_NAME, 'mail-navbar-menu-compose-link'
     __SEND_EMAIL = By.NAME, 'send'
     __ERROR_DESTINATARIO = By.ID, 'id_error_recipients'
     __PESQUISA_SATISFACAO = By.XPATH, '//*[@id="module-120665"]/div/div/div[2]/div/a/span'
@@ -42,18 +40,19 @@ class TestsPage(Lib):
     __NAO_BUTTTON = By.ID, 'id_multichoice_16594_2'
     __NOTIFICACOES = By.CLASS_NAME, 'slicon-bell'
     __PREFERENCIAS_NOTIFICACOES = By.CLASS_NAME, 'slicon-settings'
-    __NOTIFICAO_WEB = By.ID, 'yui_3_17_2_1_1632258338536_41'
+    __NOTIFICAO_WEB = By.CLASS_NAME, 'preference-state-status-container'
     __AV_QUALIS = By.NAME, '//*[@id="module-120646"]/div/div/div[2]/div/a/span'
     __ADICIONAR_ENVIO = By.ID, 'single_button614a4b6d8eeb019'
     __SALVAR_ENVIO = By.NAME, 'submitbutton'
     __ALERTA_ENVIO = By.CLASS_NAME, 'alert-danger'
-    __PERFIL_USER = By.ID, 'yui_3_17_2_1_1632259161056_20'
-    __PREFERENCIAS_USER = By.CLASS_NAME, 'icon fa fa-wrench fa-fw'
+    __PERFIL_USER = By.XPATH, '//*[@id="action-menu-toggle-1"]/span/span[2]/span/img'
+    __PREFERENCIAS_USER = By.XPATH, '//*[@id="action-menu-1-menu"]/a[6]'
     __MODIFICAR_PERFIL = By.XPATH, '//*[@id="region-main"]/div/div/div/div/div[1]/div/div/div/div[1]/a'
     __SOLTAR_IMAGEM = By.CLASS_NAME, 'dndupload-arrow'
-    __UTILIZAR_URL = By.ID, 'yui_3_17_2_1_1632261109218_1291'
+    __UTILIZAR_URL = By.XPATH, '//span[contains(text(), "Utilizar uma URL")]'
     __DOWNLOAD_IMAGE = By.CLASS_NAME, 'fp-login-submit'
     __IMAGEM = By.CLASS_NAME, 'fp-reficons2'
+    __FILL_URL = By.XPATH, '//input[@id="fileurl"]'
 
     def __init__(self, driver):
         self.driver = driver
@@ -87,45 +86,47 @@ class TestsPage(Lib):
     
     def ct_0004(self):
         #Alteração de Gravatar
-        self.ct_0001('user', 'password')
+        self.ct_0001('002-020865', 'Isatkm.alex1')
         self.click(self.__PERFIL_USER)
         self.click(self.__PREFERENCIAS_USER)
         self.click(self.__MODIFICAR_PERFIL)
         self.click(self.__SOLTAR_IMAGEM)
-        self.fill(self.__UTILIZAR_URL, self.__URL_ICON)
+        self.click(self.__UTILIZAR_URL)
+        self.click(self.__FILL_URL)
+        self.fill(self.__FILL_URL, self.__URL_ICON)
         self.click(self.__DOWNLOAD_IMAGE)
         result = self.driver.find_element(*self.__IMAGEM).is_enabled()
         assert result is True
     
     def ct_0005(self):
         #Biblioteca Online Saraiva
-        self.ct_0001('user', 'password')
+        self.ct_0001('002-020865', 'Isatkm.alex1')
         self.click(self.__DISCIPLINA_TESTAGEM)
         self.click(self.__CLICK_SARAIVA)
-        result = self.driver.find_element(*self.__LOGIN_SARAIVA).is_enabled()
-        assert result is True
+        text = 'Saraiva Online'
+        assert text in self.driver.title
     
     def ct_0006(self):
         #Biblioteca Online Pearson
-        self.ct_0001('user', 'password')
+        self.ct_0001('002-020865', 'Isatkm.alex1')
         self.click(self.__DISCIPLINA_TESTAGEM)
         self.click(self.__CLICK_PEARSON)
-        result = self.driver.find_element(*self.__ERROR_PEARSON).is_enabled()
-        assert result is False
+        text = 'Pearson'
+        assert text in self.driver.title
     
     def ct_0007(self):
         #Envio de email sem destinatário
-        self.ct_0001('user', 'password')
+        self.ct_0001('002-020865', 'Isatkm.alex1')
         self.click(self.__DISCIPLINA_TESTAGEM)
         self.click(self.__EMAIL_NAV)
         self.click(self.__NEW_EMAIL)
         self.click(self.__SEND_EMAIL)
         result = self.driver.find_element(*self.__ERROR_DESTINATARIO).is_enabled()
-        assert result is False
+        assert result is True
     
     def ct_0008(self):
         #Teste de múltipla escolha. marcando apenas 1 alternativa
-        self.ct_0001('user', 'password')
+        self.ct_0001('002-020865', 'Isatkm.alex1')
         self.click(self.__DISCIPLINA_TESTAGEM)
         self.click(self.__PESQUISA_SATISFACAO)
         self.click(self.__RESPONDA_PESQUISA)
@@ -136,18 +137,18 @@ class TestsPage(Lib):
     
     def ct_0009(self):
         #Desativar alguma notificação
-        self.ct_0001('user', 'password')
+        self.ct_0001('002-020865', 'Isatkm.alex1')
         self.click(self.__NOTIFICACOES)
         self.click(self.__PREFERENCIAS_NOTIFICACOES)
-        self.click(self.__NOTIFICAO_WEB)
-        result = self.driver.find_element(*self.__NOTIFICAO_WEB).is_enabled()
-        assert result is False
+        buttons = self.driver.find_elements(*self.__NOTIFICAO_WEB)
+        buttons[0].click()
+        result = buttons[0].is_enabled()
+        assert result is True
     
     def ct_0010(self):
         #Verificação de sucesso no envio
-        self.ct_0001('user', 'password')
+        self.ct_0001('002-020865', 'Isatkm.alex1')
         self.click(self.__DISCIPLINA_TESTAGEM)
-        self.click(self.__NOTIFICAO_WEB)
         self.click(self.__AV_QUALIS)
         self.click(self.__ADICIONAR_ENVIO)
         self.click(self.__SALVAR_ENVIO)
