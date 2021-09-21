@@ -10,8 +10,4 @@ undb_classroom = TestsPage(driver)
 # undb_classroom.ct_002('usuario')
 # undb_classroom.ct_003('email@institucional.com')
 
-undb_classroom.ct_0024('andrekroliveira@gmail.com')
-
-# assert 'UNDB' in driver.title
-
 print('')
