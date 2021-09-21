@@ -8,6 +8,7 @@ class TestsPage(Lib):
     'Coloquem os localizadores dos elementos aqui, vai facilitar!'
     URL = 'https://undbclassroom.undb.edu.br'
     __LOGIN_DIRETO_URL = 'https://undbclassroom.undb.edu.br/login/index.php#'
+    __URL_ICON = 'https://cdn-icons-png.flaticon.com/512/1521/1521260.png'
     __EMAIL_TEXTBOX =  By.ID, 'username'
     __SENHA_TEXTBOX = By.ID, 'password'
     __ACESSAR_BUTTON = By.CLASS_NAME, 'btn-primary'
@@ -39,6 +40,20 @@ class TestsPage(Lib):
     __RESPONDA_PESQUISA = By.XPATH, '//*[@id="region-main"]/div[1]/div/div/div[2]/div/a'
     __SIM_BUTTTON = By.ID, 'id_multichoice_16594_1'
     __NAO_BUTTTON = By.ID, 'id_multichoice_16594_2'
+    __NOTIFICACOES = By.CLASS_NAME, 'slicon-bell'
+    __PREFERENCIAS_NOTIFICACOES = By.CLASS_NAME, 'slicon-settings'
+    __NOTIFICAO_WEB = By.ID, 'yui_3_17_2_1_1632258338536_41'
+    __AV_QUALIS = By.NAME, '//*[@id="module-120646"]/div/div/div[2]/div/a/span'
+    __ADICIONAR_ENVIO = By.ID, 'single_button614a4b6d8eeb019'
+    __SALVAR_ENVIO = By.NAME, 'submitbutton'
+    __ALERTA_ENVIO = By.CLASS_NAME, 'alert-danger'
+    __PERFIL_USER = By.ID, 'yui_3_17_2_1_1632259161056_20'
+    __PREFERENCIAS_USER = By.CLASS_NAME, 'icon fa fa-wrench fa-fw'
+    __MODIFICAR_PERFIL = By.XPATH, '//*[@id="region-main"]/div/div/div/div/div[1]/div/div/div/div[1]/a'
+    __SOLTAR_IMAGEM = By.CLASS_NAME, 'dndupload-arrow'
+    __UTILIZAR_URL = By.ID, 'yui_3_17_2_1_1632261109218_1291'
+    __DOWNLOAD_IMAGE = By.CLASS_NAME, 'fp-login-submit'
+    __IMAGEM = By.CLASS_NAME, 'fp-reficons2'
 
     def __init__(self, driver):
         self.driver = driver
@@ -70,7 +85,17 @@ class TestsPage(Lib):
         text = 'Se o usuário e o email estiverem corretos um email deve ter sido enviado a você.'
         assert text in self.driver.title
     
-    def ct_0004(self):...
+    def ct_0004(self):
+        #Alteração de Gravatar
+        self.ct_0001('user', 'password')
+        self.click(self.__PERFIL_USER)
+        self.click(self.__PREFERENCIAS_USER)
+        self.click(self.__MODIFICAR_PERFIL)
+        self.click(self.__SOLTAR_IMAGEM)
+        self.fill(self.__UTILIZAR_URL, self.__URL_ICON)
+        self.click(self.__DOWNLOAD_IMAGE)
+        result = self.driver.find_element(*self.__IMAGEM).is_enabled()
+        assert result is True
     
     def ct_0005(self):
         #Biblioteca Online Saraiva
@@ -109,9 +134,25 @@ class TestsPage(Lib):
         result = self.driver.find_element(*self.__SIM_BUTTTON).is_selected()
         assert result is False
     
-    def ct_0009(self):...
+    def ct_0009(self):
+        #Desativar alguma notificação
+        self.ct_0001('user', 'password')
+        self.click(self.__NOTIFICACOES)
+        self.click(self.__PREFERENCIAS_NOTIFICACOES)
+        self.click(self.__NOTIFICAO_WEB)
+        result = self.driver.find_element(*self.__NOTIFICAO_WEB).is_enabled()
+        assert result is False
     
-    def ct_0010(self):...
+    def ct_0010(self):
+        #Verificação de sucesso no envio
+        self.ct_0001('user', 'password')
+        self.click(self.__DISCIPLINA_TESTAGEM)
+        self.click(self.__NOTIFICAO_WEB)
+        self.click(self.__AV_QUALIS)
+        self.click(self.__ADICIONAR_ENVIO)
+        self.click(self.__SALVAR_ENVIO)
+        result = self.driver.find_element(*self.__ALERTA_ENVIO).is_enabled()
+        assert result is False
     
 
     def ct_0011(self,):...
