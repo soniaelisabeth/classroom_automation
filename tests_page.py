@@ -1,10 +1,12 @@
 from selenium.webdriver.common import by
 from selenium.webdriver.common.by import By
 from lib import Lib
+from time import sleep
 
 class TestsPage(Lib):
     'Coloquem os localizadores dos elementos aqui, vai facilitar!'
     URL = 'https://undbclassroom.undb.edu.br'
+    __LOGIN_DIRETO_URL = 'https://undbclassroom.undb.edu.br/login/index.php#'
     __EMAIL_TEXTBOX =  By.ID, 'username'
     __SENHA_TEXTBOX = By.ID, 'password'
     __ACESSAR_BUTTON = By.CLASS_NAME, 'btn-primary'
@@ -12,20 +14,33 @@ class TestsPage(Lib):
     __ID_USUARIO_TEXTBOX = By.ID, 'id_username'
     __BUSCAR_BUTTON = By.NAME, 'submitbuttonusername'
     __ID_EMAIL_TEXTBOX = By.ID, 'id_email'
+    __ACESSAR_TEIA = By.XPATH, '//*[@id="page"]/div[2]/div/div/div[1]/div/a'
+    __ACESSAR_PORTAL = By.XPATH, '//*[@id="page"]/div[2]/div/div/div[2]/div/a'
+    __ACESSAR_SITE = By.XPATH, '//*[@id="page"]/div[2]/div/div/div[3]/div/a'
+    __LEMBRAR_USUARIO = By.NAME, "rememberusername"
+    __ACESSAR_LINK_PLAYSTORE = By.XPATH, '//*[@id="top-footer"]/div/div/div[1]/h4/a[1]/img'
+    __CALENDARIO = By.XPATH, '//*[@id="nav-drawer"]/ul/li[3]/a'
+    __SETA_CALENDARIO = By.CLASS_NAME, 'arrow_text'
+    __ACESSAR_LINK_APPSTORE = By.XPATH, '//*[@id="top-footer"]/div/div/div[1]/h4/a[2]/img'
+    __ACESSAR_EMAIL_INSTITUCIONAL = By.XPATH, '//*[@id="boxForm"]/div/div/div/a'
+    __ACESSAR_BARRA_OPCOES = By.XPATH, '//*[@id="action-menu-toggle-1"]'
+    __ACESSSAR_SAIR = By.XPATH, '//*[@id="action-menu-1-menu"]/a[7]'
+    __EMAIL_GOOGLE = By.ID, 'identifierId'
+    __BOTAO_PROXIMO = By.XPATH, '//*[@id="identifierNext"]/div/button'
 
     def __init__(self, driver):
         self.driver = driver
     
-    def ct_001(self, user, password):
+    def ct_0001(self, user, password):
         #Teste de login
         self.open_page(self.URL)
         self.fill(self.__EMAIL_TEXTBOX, user)
         self.fill(self.__SENHA_TEXTBOX, password)
         self.click(self.__ACESSAR_BUTTON)
-        text = 'Meus cursos'
+        text = 'UNDB Classroom'
         assert text in self.driver.title
     
-    def ct_002(self, user):
+    def ct_0002(self, user):
         #Alteração de usuário ou senha pela identificação do usuário
         self.open_page(self.URL)
         self.click(self.__ESQUECEU_SENHA_BUTTON)
@@ -34,7 +49,7 @@ class TestsPage(Lib):
         text = 'Se o usuário e o email estiverem corretos um email deve ter sido enviado a você.'
         assert text in self.driver.title
 
-    def ct_003(self, email):
+    def ct_0003(self, email):
         #Alteração de usuário ou senha pelo email institucional
         self.open_page(self.URL)
         self.click(self.__ESQUECEU_SENHA_BUTTON)
@@ -43,17 +58,17 @@ class TestsPage(Lib):
         text = 'Se o usuário e o email estiverem corretos um email deve ter sido enviado a você.'
         assert text in self.driver.title
     
-    def ct_004(self,):...
+    def ct_0004(self,):...
     
-    def ct_005(self,):...
+    def ct_0005(self,):...
     
-    def ct_006(self,):...
+    def ct_0006(self,):...
     
-    def ct_007(self,):...
+    def ct_0007(self,):...
     
-    def ct_008(self,):...
+    def ct_0008(self,):...
     
-    def ct_009(self,):...
+    def ct_0009(self,):...
     
     def ct_0010(self,):...
     
@@ -68,16 +83,81 @@ class TestsPage(Lib):
     def ct_0018(self,):...
     def ct_0019(self,):...
     def ct_0020(self,):...
-    def ct_0021(self,):...
-    def ct_0022(self,):...
-    def ct_0023(self,):...
-    def ct_0024(self,):...
-    def ct_0025(self,):...
-    def ct_0026(self,):...
-    def ct_0027(self,):...
-    def ct_0028(self,):...
-    def ct_0029(self,):...
-    def ct_0030(self,):...
+    
+    def ct_0021(self):
+        #Redirecionamento do link do site TEIA
+        self.open_page(self.URL)
+        sleep(2)
+        self.click(self.__ACESSAR_TEIA)
+        text = 'Espaço Teia'
+        assert text in self.driver.title
+
+    def ct_0022(self,):
+        #Redirecionamento do link do site do portal academico
+        self.open_page(self.URL)
+        sleep(2)
+        self.click(self.__ACESSAR_PORTAL)
+        text = 'Portal do Aluno'
+        assert text in self.driver.title
+
+    def ct_0023(self,):
+        #Redirecionamento do link do site da UNDB
+        self.open_page(self.URL)
+        sleep(2)
+        self.click(self.__ACESSAR_SITE)
+        text = 'Sou UNDB'
+        assert text in self.driver.title
+
+    def ct_0024(self,email):
+        #Testagem de e-mail institucional
+        self.ct_0029()
+        self.fill(self.__EMAIL_GOOGLE, email)
+        result = self.driver.find_element(*self.__BOTAO_PROXIMO).is_enabled()
+        assert result is True
+
+    def ct_0025(self,):
+        #Checagem de identificação de usuário
+        self.open_page(self.__LOGIN_DIRETO_URL)
+        self.click(self.__LEMBRAR_USUARIO)
+        result = self.driver.find_element(*self.__LEMBRAR_USUARIO).is_selected()
+        assert result is True
+
+    def ct_0026(self,):
+        #Redirecionamento do site da google play store
+        self.open_page(self.URL)
+        self.click(self.__ACESSAR_LINK_PLAYSTORE)
+        text = 'UNDB Classroom'
+        assert text in self.driver.title
+
+    def ct_0027(self,):
+        #Chave de eventos e visualização mensal
+        self.ct_0001('user', 'password')
+        self.click(self.__CALENDARIO)
+        result = self.driver.find_element(*self.__SETA_CALENDARIO).is_enabled()
+        assert result is True
+        
+    def ct_0028(self,):
+        #Redirecionamento do site da app store
+        self.open_page(self.URL)
+        self.click(self.__ACESSAR_LINK_APPSTORE)
+        text = 'UNDB Classroom'
+        assert text in self.driver.title
+
+    def ct_0029(self,):
+        #Testagem de login com e-mail institucional
+        self.open_page(self.URL)
+        self.click(self.__ACESSAR_EMAIL_INSTITUCIONAL)
+        text = 'Fazer login nas Contas do Google'
+        assert text in self.driver.title
+
+    def ct_0030(self,):
+        #Testagem caixa de comando "sair"
+        self.ct_0001('user', 'password')
+        self.click(self.__ACESSAR_BARRA_OPCOES)
+        self.click(self.__ACESSSAR_SAIR )
+        text = 'UNDB Classroom'
+        assert text in self.driver.title
+
     def ct_0031(self,):...
     def ct_0032(self,):...
     def ct_0033(self,):...
