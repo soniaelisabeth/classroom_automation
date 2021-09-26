@@ -1,7 +1,7 @@
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver import ActionChains
 
 class Lib():
     '''
@@ -27,3 +27,8 @@ class Lib():
         elem = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(locator))
         elem.clear()
         elem.send_keys(text)
+    
+    def hover_to_element(self, locator):
+        element_to_hover_over = self.driver.find_element(*locator)
+        hover = ActionChains(self.driver).move_to_element(element_to_hover_over)
+        hover.perform()
